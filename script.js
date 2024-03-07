@@ -1,6 +1,6 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
-function AddTask(){
+function addTask(){
     if(inputBox.value == ''){
         alert("You must write something!");
     }
@@ -13,4 +13,24 @@ function AddTask(){
         li.appendChild(span);
     }
     inputBox.value ="";
+    saveData();
 }
+
+listContainer.addEventListener("Click", function(e){
+    if(e.target.tagName === "li"){
+        e.target.classList.toggle("checked");
+        saveData();
+    }
+    else if (e.target.tagName === "span"){
+        e.target.parentElement.remove();
+        saveData();
+    } 
+},false);
+
+function saveData(){
+    localStorage.setItem("data", listContainer.innerHTML);
+}
+function showTask(){
+    listContainer.innerHTML = localStorage.getItem("data");
+}
+showTask();
